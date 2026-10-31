@@ -18,7 +18,7 @@
 *   **Digital Divide:** Computer usage stands at **40.3%** in urban areas vs. only **21.2%** in rural areas. While overall internet penetration is 76.5% (World Bank, 2024), a massive segment of the population remains digitally excluded.
 *   **Legal Sector:** Thousands of legal professionals and a high backlog of civil and labor disputes annually. 
 *   **Addressable Market:** Millions of citizens needing accessible legal/administrative guidance (especially women and rural populations), supported by a B2B network of legal practitioners.
-
+ 
 ## 3. Key Trends
 *   **GovTech & Digital Inclusion:** The market is shifting towards "Zero-UI" (Voice-first) interfaces to include marginalized groups who cannot read or type.
 *   **AI & Local Language (Derja):** High demand for AI that understands local dialects (Derja) via Speech-to-Text, bridging the gap between technology and citizens.
