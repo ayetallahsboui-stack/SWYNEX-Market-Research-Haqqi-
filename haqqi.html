@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haqqi App - حقي</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo for Arabic UI) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-navy: #0A2540;
+            --primary-light: #1D3B5A;
+            --accent-blue: #0066CC;
+            --accent-beige: #F7F4EF;
+            --card-beige: #EFEADF;
+            --border-beige: #E5DEC9;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --white: #FFFFFF;
+            --danger-red: #DC2626;
+            --success-green: #16A34A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0F172A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Smartphone Frame Container */
+        .phone-mockup {
+            width: 100%;
+            max-width: 410px;
+            height: 840px;
+            background-color: #000000;
+            border-radius: 48px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 12px #1E293B;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Screen Wrapper */
+        .screen {
+            background-color: var(--accent-beige);
+            width: 100%;
+            height: 100%;
+            border-radius: 38px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top Notch Area */
+        .phone-header {
+            height: 30px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dark);
+            z-index: 100;
+        }
+
+        .notch {
+            width: 120px;
+            height: 18px;
+            background-color: #000000;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 101;
+        }
+
+        /* App Main Header */
+        .app-header {
+            background-color: var(--white);
+            padding: 10px 18px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-beige);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            z-index: 90;
+        }
+
+        /* Dynamic Brand Logo */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-icon-svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            line-height: 1.1;
+        }
+
+        .brand-slogan {
+            font-size: 10px;
+            color: var(--primary-navy);
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        /* Header Quick Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--accent-beige);
+            border: none;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.92);
+            background-color: var(--card-beige);
+        }
+
+        .btn-chatbot {
+            background-color: #EBF3FA;
+            color: var(--primary-navy);
+        }
+
+        /* Content Scroll Area */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        .app-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* View Container System */
+        .view {
+            display: none;
+            padding: 16px;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- View 1: HOME (الرئيسية) --- */
+        .welcome-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-beige);
+        }
+
+        .welcome-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        /* Central Professional Mic Button */
+        .mic-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0 16px;
+        }
+
+        .mic-outer-ring {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background-color: var(--card-beige);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: pulseRing 3s infinite;
+        }
+
+        @keyframes pulseRing {
+            0% { box-shadow: 0 0 0 0 rgba(10, 37, 64, 0.12); }
+            70% { box-shadow: 0 0 0 18px rgba(10, 37, 64, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(10, 37, 64, 0); }
+        }
+
+        .mic-inner-btn {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background-color: var(--primary-navy);
+            border: none;
+            color: var(--white);
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(10, 37, 64, 0.25);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .mic-inner-btn:active {
+            transform: scale(0.92);
+            background-color: var(--primary-light);
+        }
+
+        .mic-hint-tag {
+            background-color: var(--card-beige);
+            color: var(--primary-navy);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* Quick Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .home-search-input {
+            width: 100%;
+            background-color: var(--white);
+            border: 1px solid var(--border-beige);
+            padding: 12px 14px 12px 42px;
+            border-radius: 14px;
+            font-size: 13px;
+            color: var(--text-dark);
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .search-mic-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-navy);
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        /* 4 Main Grid Cards */
+        .section-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .cat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            border: 1px solid var(--border-beige);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .cat-card:active {
+            transform: translateY(-2px);
+            border-color: var(--primary-navy);
+            box-shadow: 0 6px 12px rgba(10, 37, 64, 0.08);
+        }
+
+        .cat-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background-color: var(--card-beige);
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .cat-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        /* --- View 2: CHATBOT SCREEN --- */
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .bot-bubble {
+            background-color: var(--white);
+            color: var(--text-dark);
+            border: 1px solid var(--border-beige);
+            align-self: flex-start;
+            border-bottom-right-radius: 4px;
+        }
+
+        .user-bubble {
+            background-color: var(--primary-navy);
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-left-radius: 4px;
+        }
+
+        /* --- View 3: WORK DISPUTE DETAIL VIEW --- */
+        .breadcrumb {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .detail-card {
+            background-color: var(--white);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-beige);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background-color: #FEE2E2;
+            color: var(--danger-red);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .detail-header-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 6px;
+        }
+
+        .detail-subtext {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Step Checklist */
+        .checklist-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+        }
+
+        .step-item {
+            background-color: var(--white);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-beige);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .step-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--primary-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .step-checkbox.checked {
+            background-color: var(--primary-navy);
+            color: var(--white);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-heading {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 11px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .btn-action-primary {
+            width: 100%;
+            background-color: var(--primary-navy);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(10, 37, 64, 0.2);
+            margin-top: 10px;
+        }
+
+        /* --- View 4: DIRECTORY LIST VIEW --- */
+        .directory-item {
+            background-color: var(--white);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-beige);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .dir-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dir-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: var(--card-beige);
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .dir-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-navy);
+        }
+
+        /* --- View 5: EMERGENCY VIEW --- */
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .emergency-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid #FEE2E2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .emergency-num {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--danger-red);
+        }
+
+        .emergency-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-navy);
+        }
+
+        .call-btn {
+            background-color: var(--danger-red);
+            color: var(--white);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* --- View 6: PROFIL VIEW --- */
+        .profile-card {
+            background-color: var(--white);
+            border-radius: 18px;
+            padding: 16px;
+            border: 1px solid var(--border-beige);
+            margin-bottom: 14px;
+        }
+
+        .user-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-navy);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .user-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary-navy);
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--accent-beige);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-select {
+            background-color: var(--accent-beige);
+            border: 1px solid var(--border-beige);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            outline: none;
+        }
+
+        /* Bottom Fixed Navigation Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+            background-color: var(--white);
+            border-top: 1px solid var(--border-beige);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 95;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            width: 25%;
+            text-align: center;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-navy);
+        }
+
+        /* OCR Camera Modal Overlay */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 20px 30px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .scanner-frame {
+            width: 100%;
+            height: 320px;
+            border: 2px dashed #D4AF37;
+            border-radius: 20px;
+            margin: auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scan-line {
+            width: 100%;
+            height: 2px;
+            background-color: #D4AF37;
+            position: absolute;
+            top: 10%;
+            animation: scanAnim 2.5s infinite ease-in-out;
+        }
+
+        @keyframes scanAnim {
+            0% { top: 10%; }
+            50% { top: 90%; }
+            100% { top: 10%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-mockup">
+        <div class="screen">
+            
+            <!-- Smartphone Top Header Notch -->
+            <div class="phone-header">
+                <span>09:41</span>
+                <div class="notch"></div>
+                <div>
+                    <i class="fa-solid fa-wifi"></i>
+                    <i class="fa-solid fa-battery-full" style="margin-right: 4px;"></i>
+                </div>
+            </div>
+
+            <!-- App Custom Header -->
+            <div class="app-header">
+                <!-- Exact Justice Scale SVG Logo -->
+                <div class="brand-logo" onclick="switchView('view-home')">
+                    <svg class="logo-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Top Diamond Emblem -->
+                        <path d="M50 12 L55 22 L50 32 L45 22 Z" fill="#0A2540"/>
+                        <!-- Top Wings Beam -->
+                        <path d="M50 25 C35 25, 26 20, 24 22 C22 24, 28 30, 50 30 C72 30, 78 24, 76 22 C74 20, 65 25, 50 25 Z" fill="#0A2540"/>
+                        <!-- Central Pillar -->
+                        <rect x="46" y="30" width="8" height="42" fill="#0A2540"/>
+                        <path d="M50 42 L54 52 L50 62 L46 52 Z" fill="#F7F4EF"/>
+                        <!-- Base Steps -->
+                        <rect x="36" y="72" width="28" height="4" rx="1" fill="#0A2540"/>
+                        <rect x="30" y="76" width="40" height="5" rx="1" fill="#0A2540"/>
+                        <!-- Scale Pans Left/Right -->
+                        <path d="M24 22 L18 50 H38 L32 22 Z" fill="none" stroke="#0A2540" stroke-width="2"/>
+                        <path d="M18 50 C18 58, 38 58, 38 50 Z" fill="#0A2540"/>
+                        
+                        <path d="M76 22 L70 50 H90 L84 22 Z" fill="none" stroke="#0A2540" stroke-width="2"/>
+                        <path d="M70 50 C70 58, 90 58, 90 50 Z" fill="#0A2540"/>
+                    </svg>
+                    <div class="brand-text">
+                        <span class="brand-name" id="logo-brand-name">حقي</span>
+                        <span class="brand-slogan" id="logo-brand-slogan">حقك يهمنا</span>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="openOCRModal()" title="مسح ضوئي للوثائق">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                    <button class="icon-btn btn-chatbot" onclick="switchView('view-chat')" title="المساعد الذكي">
+                        <i class="fa-solid fa-robot"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main App Content Container -->
+            <div class="app-content">
+
+                <!-- 1. HOME VIEW (الرئيسية) -->
+                <div id="view-home" class="view active">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            "شنوة المشكل الإداري أو القانوني اللي يحيرك اليوم؟ حقي هنا على ذمتك باش يفسرلك ويبسطلك. انزل هنا كان باش تحكي..."
+                        </div>
+
+                        <!-- Central Mic Button -->
+                        <div class="mic-wrapper">
+                            <div class="mic-outer-ring">
+                                <button class="mic-inner-btn" onclick="triggerVoiceAssistant()">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="mic-hint-tag">اضغط للتحدث مباشرة</span>
+                    </div>
+
+                    <!-- Quick Search Bar -->
+                    <div class="search-container">
+                        <input type="text" class="home-search-input" placeholder="ابحث عن مشكل أو وثيقة...">
+                        <i class="fa-solid fa-microphone search-mic-icon" onclick="triggerVoiceAssistant()"></i>
+                    </div>
+
+                    <div class="section-title">
+                        <i class="fa-solid fa-layer-group"></i> الأقسام الرئيسية
+                    </div>
+
+                    <!-- 4 Main Grid Cards -->
+                    <div class="categories-grid">
+                        <div class="cat-card" onclick="switchView('view-work-detail')">
+                            <div class="cat-icon-box"><i class="fa-solid fa-briefcase"></i></div>
+                            <div class="cat-label">مشاكل الشغل والعمل</div>
+                        </div>
+                        <div class="cat-card" onclick="switchView('view-directory')">
+                            <div class="cat-icon-box"><i class="fa-solid fa-file-contract"></i></div>
+                            <div class="cat-label">وثائق إدارية</div>
+                        </div>
+                        <div class="cat-card" onclick="switchView('view-directory')">
+                            <div class="cat-icon-box"><i class="fa-solid fa-car"></i></div>
+                            <div class="cat-label">الرخص والنقل</div>
+                        </div>
+                        <div class="cat-card" onclick="switchView('view-directory')">
+                            <div class="cat-icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <div class="cat-label">نزاعات إدارية</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CHATBOT VIEW -->
+                <div id="view-chat" class="view">
+                    <div class="breadcrumb" onclick="switchView('view-home')">
+                        <i class="fa-solid fa-arrow-right"></i> العودة للرئيسية
+                    </div>
+                    
+                    <div class="chat-messages">
+                        <div class="chat-bubble bot-bubble">
+                            مرحباً بك! أنا مساعد <strong>حقي</strong> الذكي. تفضل أحكيلي مشكلتك بالدارجة أو اكتبها هنا وراح نعطيك الحل والخطوات فوراً.
+                        </div>
+                        <div class="chat-bubble user-bubble">
+                            تطردت من الخدمة تعسفياً وما عرفتش شنوة نعمل؟
+                        </div>
+                        <div class="chat-bubble bot-bubble">
+                            يعتيك الصحة على السؤال. أهم حاجة توا: ما تخرجش عشوائياً، وتوجه فوراً لتفقدية الشغل التابعة لمنطقتك. تحب نعطيك خطوات الملف بالتفصيل؟
+                        </div>
+                    </div>
+
+                    <button class="btn-action-primary" onclick="switchView('view-work-detail')">
+                        <i class="fa-solid fa-circle-arrow-left"></i> عرض دليل الطرد التعسفي والخطوات
+                    </button>
+                </div>
+
+                <!-- 3. WORK DISPUTE DETAIL VIEW -->
+                <div id="view-work-detail" class="view">
+                    <div class="breadcrumb" onclick="switchView('view-home')">
+                        <i class="fa-solid fa-arrow-right"></i> الرئيسية / الطرد التعسفي من العمل
+                    </div>
+
+                    <div class="detail-card">
+                        <span class="status-badge"><i class="fa-solid fa-triangle-exclamation"></i> وضعية طارئة</span>
+                        <h2 class="detail-header-title">شنوة تعمل كيف تتطرد تعسفياً من خدمتك؟</h2>
+                        <p class="detail-subtext">دليل قانوني مبسط بالدارجة التونسية يوضحلك حقوقك والخطوات الصحيحة باش ما يضيعش حقك.</p>
+                    </div>
+
+                    <div class="checklist-title"><i class="fa-solid fa-list-check"></i> الخطوات العملية المنظمة:</div>
+
+                    <div class="step-item">
+                        <div class="step-checkbox checked"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-content">
+                            <div class="step-heading">1. لا تترك مكان العمل عشوائياً</div>
+                            <div class="step-desc">اطلب مكتوب رسمي يؤكد الطرد. إذا رفض المؤجر، اكتب مكتوب لافتراض العودة للعمل (Abandon de poste).</div>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-checkbox" onclick="this.classList.toggle('checked')"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-content">
+                            <div class="step-heading">2. التوجه إلى تفقدية الشغل (Inspection du travail)</div>
+                            <div class="step-desc">قم بإعلام تفقدية الشغل في مرجع نظرك الترابي لطلب إجراء جلسة صلحية.</div>
+                        </div>
+                    </div>
+
+                    <button class="btn-action-primary" onclick="switchView('view-dept-detail')">
+                        <i class="fa-solid fa-location-dot"></i> دبرني وين نمشي بالضبط
+                    </button>
+                </div>
+
+                <!-- 4. DIRECTORY VIEW -->
+                <div id="view-directory" class="view">
+                    <div class="section-title"><i class="fa-solid fa-book"></i> دليل الإدارات والخبراء المختصين</div>
+                    
+                    <div class="directory-item" onclick="switchView('view-dept-detail')">
+                        <div class="dir-info">
+                            <div class="dir-icon"><i class="fa-solid fa-scale-unbalanced-flip"></i></div>
+                            <div>
+                                <div class="dir-title">محامين مختصين</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">استشارات قانونية ودفاع عن الحقوق</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-left" style="color: var(--text-muted);"></i>
+                    </div>
+
+                    <div class="directory-item">
+                        <div class="dir-info">
+                            <div class="dir-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                            <div>
+                                <div class="dir-title">أطباء نفسانيين</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">مرافقة نفسية ودعم الحالات الطارئة</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-left" style="color: var(--text-muted);"></i>
+                    </div>
+
+                    <div class="directory-item" onclick="switchView('view-dept-detail')">
+                        <div class="dir-info">
+                            <div class="dir-icon"><i class="fa-solid fa-user-tie"></i></div>
+                            <div>
+                                <div class="dir-title">تفقدية الشغل</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">نزاعات الشغل والصلح الإداري</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-left" style="color: var(--text-muted);"></i>
+                    </div>
+
+                    <div class="directory-item">
+                        <div class="dir-info">
+                            <div class="dir-icon"><i class="fa-solid fa-city"></i></div>
+                            <div>
+                                <div class="dir-title">بلديات ومؤسسات غرف الإصدار</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">التعريف بالحالة المدنية والوثائق</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-left" style="color: var(--text-muted);"></i>
+                    </div>
+                </div>
+
+                <!-- 5. DEPARTMENT DETAIL VIEW -->
+                <div id="view-dept-detail" class="view">
+                    <div class="breadcrumb" onclick="switchView('view-directory')">
+                        <i class="fa-solid fa-arrow-right"></i> الإرشادات / تفقدية الشغل
+                    </div>
+
+                    <div class="detail-card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2 class="detail-header-title">تفقدية الشغل</h2>
+                            <span style="font-size: 11px; color: var(--success-green); font-weight: 700;"><i class="fa-solid fa-circle"></i> مفتوح الآن (08:00 - 14:30)</span>
+                        </div>
+                        <a href="tel:71000000" class="icon-btn" style="background-color: var(--primary-navy); color: var(--white); text-decoration: none;">
+                            <i class="fa-solid fa-phone"></i>
+                        </a>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="checklist-title"><i class="fa-solid fa-map-pin"></i> المقر والعنوان:</div>
+                        <p class="detail-subtext" style="font-size: 13px; color: var(--text-dark);">
+                            حاصلة في شارع الحرية، عمارة الأمل، مقابل مقر الولاية.
+                        </p>
+                    </div>
+
+                    <button class="btn-action-primary">
+                        <i class="fa-solid fa-route"></i> أطلعني على الأقرب لي (GPS)
+                    </button>
+                </div>
+
+                <!-- 6. EMERGENCY VIEW -->
+                <div id="view-emergency" class="view">
+                    <div class="section-title" style="color: var(--danger-red);"><i class="fa-solid fa-phone-volume"></i> أرقام الطوارئ والأنجدة السريعة</div>
+                    
+                    <div class="emergency-grid">
+                        <div class="emergency-card">
+                            <span class="emergency-num">197</span>
+                            <span class="emergency-name">الشرطة الوطنية</span>
+                            <a href="tel:197" class="call-btn">اتصال فوراً</a>
+                        </div>
+                        <div class="emergency-card">
+                            <span class="emergency-num">190</span>
+                            <span class="emergency-name">الإسعاف الطبي (SAMU)</span>
+                            <a href="tel:190" class="call-btn">اتصال فوراً</a>
+                        </div>
+                        <div class="emergency-card">
+                            <span class="emergency-num">1899</span>
+                            <span class="emergency-name">مقاومة العنف الأسري</span>
+                            <a href="tel:1899" class="call-btn">اتصال فوراً</a>
+                        </div>
+                        <div class="emergency-card">
+                            <span class="emergency-num">198</span>
+                            <span class="emergency-name">الحماية المدنية</span>
+                            <a href="tel:198" class="call-btn">اتصال فوراً</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. PROFIL VIEW -->
+                <div id="view-profile" class="view">
+                    <div class="profile-card">
+                        <div class="user-header-info">
+                            <div class="avatar-circle">م</div>
+                            <div>
+                                <div class="user-name">م. تونسي</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">مواطن مسجل - حساب آمن</div>
+                            </div>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-label"><i class="fa-solid fa-language"></i> لغة التطبيق:</div>
+                            <select class="lang-select" onchange="changeLanguage(this.value)">
+                                <option value="ar">الدارجة التونسية</option>
+                                <option value="fr">Français</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-label"><i class="fa-solid fa-volume-high"></i> التوجيه الصوتي المباشر:</div>
+                            <input type="checkbox" checked style="accent-color: var(--primary-navy);">
+                        </div>
+
+                        <div class="setting-row" onclick="openOCRModal()" style="cursor: pointer;">
+                            <div class="setting-label"><i class="fa-solid fa-vault"></i> الخزنة المشفرة (الوثائق)</div>
+                            <i class="fa-solid fa-chevron-left" style="font-size: 12px; color: var(--text-muted);"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="switchView('view-home', this)">
+                    <i class="fa-solid fa-house"></i>
+                    <span>الرئيسية</span>
+                </div>
+                <div class="nav-item" onclick="switchView('view-directory', this)">
+                    <i class="fa-solid fa-book"></i>
+                    <span>إرشادات إدارية</span>
+                </div>
+                <div class="nav-item" onclick="switchView('view-emergency', this)">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>إشعارات وطوارئ</span>
+                </div>
+                <div class="nav-item" onclick="switchView('view-profile', this)">
+                    <i class="fa-solid fa-user"></i>
+                    <span>حسابي</span>
+                </div>
+            </div>
+
+            <!-- OCR Camera Modal -->
+            <div id="ocr-modal" class="modal-overlay">
+                <div>
+                    <h3><i class="fa-solid fa-camera"></i> تصوير الوثيقة الإدارية</h3>
+                    <p style="font-size: 12px; opacity: 0.8; margin-top: 4px;">وجه الكاميرا نحو المكتوب الرسمي أو الورقة لفك شفرتها بصوت واضح</p>
+                </div>
+
+                <div class="scanner-frame">
+                    <div class="scan-line"></div>
+                    <i class="fa-solid fa-file-lines" style="font-size: 64px; opacity: 0.3;"></i>
+                </div>
+
+                <button class="btn-action-primary" style="background-color: #D4AF37; color: var(--primary-navy);" onclick="closeOCRModal()">
+                    <i class="fa-solid fa-circle-check"></i> قراءة وتفسير الورقة بالدارجة
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        function switchView(viewId, navElement) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            
+            const targetView = document.getElementById(viewId);
+            if(targetView) targetView.classList.add('active');
+
+            if(navElement) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                navElement.classList.add('active');
+            }
+        }
+
+        function triggerVoiceAssistant() {
+            switchView('view-chat');
+        }
+
+        function changeLanguage(lang) {
+            const brandName = document.getElementById('logo-brand-name');
+            const brandSlogan = document.getElementById('logo-brand-slogan');
+
+            if(lang === 'fr') {
+                brandName.innerText = 'Haqqi';
+                brandSlogan.innerText = 'Votre droit compte';
+            } else if(lang === 'en') {
+                brandName.innerText = 'Haqqi';
+                brandSlogan.innerText = 'Your Right Matters';
+            } else {
+                brandName.innerText = 'حقي';
+                brandSlogan.innerText = 'حقك يهمنا';
+            }
+        }
+
+        function openOCRModal() {
+            document.getElementById('ocr-modal').style.display = 'flex';
+        }
+
+        function closeOCRModal() {
+            document.getElementById('ocr-modal').style.display = 'none';
+            alert("تم مسح الوثيقة بنجاح ومزامنتها مع الخزنة المشفرة!");
+        }
+    </script>
+</body>
+</html>
+
