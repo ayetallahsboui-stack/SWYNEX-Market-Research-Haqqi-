@@ -30,3 +30,5 @@
 *   **Tunisian National Institute of Statistics (INS) - 2024 Digital Access Data:** Urban vs. rural internet and computer usage.
 *   **World Bank Data (2024):** Internet users in Tunisia (76.5% of the population).
 *   **Startup Tunisia Ecosystem Reports:** GovTech & Digital Inclusion trends.
+---
+© 2026 Sboui. All rights reserved. Proprietary concept for Haqqi.
